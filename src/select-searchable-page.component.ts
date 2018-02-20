@@ -36,8 +36,10 @@ import { SelectSearchable } from './select-searchable.component';
             <ion-infinite-scroll [enabled]="selectComponent.hasInfiniteScroll" (ionInfinite)="getMoreItems($event)">
                 <ion-infinite-scroll-content></ion-infinite-scroll-content>
             </ion-infinite-scroll>
-            <div *ngIf="!filteredItems.length" margin>No items found.</div>
-        </ion-content>
+
+            <button ion-button block *ngIf="!filteredItems.length" type="button" (click)="addItem(selectComponent.filterText)">Adicionar {{selectComponent.filterText}}</button>
+       
+            </ion-content>
         <ion-footer *ngIf="selectComponent.canReset || selectComponent.multiple">
             <ion-toolbar padding>
                 <ion-row>
@@ -144,6 +146,12 @@ export class SelectSearchablePage implements AfterViewInit {
 
             this.close();
         }
+    }
+
+    addItem(item:any) {
+        this.selectedItems = [];
+        this.addSelectedItem(item);
+        this.selectComponent.emitAdd(item);
     }
 
     ok() {

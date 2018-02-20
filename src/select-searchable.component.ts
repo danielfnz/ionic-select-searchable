@@ -71,6 +71,7 @@ export class SelectSearchable implements ControlValueAccessor, OnInit, OnDestroy
     @Input() title: string;
     @Input() searchPlaceholder: string;
     @Output() onChange: EventEmitter<any> = new EventEmitter();
+    @Output() onAddItem: EventEmitter<any> = new EventEmitter();
     @Output() onSearch: EventEmitter<any> = new EventEmitter();
     @Output() onInfiniteScroll: EventEmitter<any> = new EventEmitter();
     @Input() itemTemplate: Function;
@@ -124,6 +125,14 @@ export class SelectSearchable implements ControlValueAccessor, OnInit, OnDestroy
     emitChange() {
         this.propagateChange(this.value);
         this.onChange.emit({
+            component: this,
+            value: this.value
+        });
+    }
+
+    emitAdd(selectedItem: any){
+        this.value = selectedItem;
+        this.onAddItem.emit({
             component: this,
             value: this.value
         });
