@@ -67,6 +67,7 @@ export class SelectSearchable implements ControlValueAccessor, OnInit, OnDestroy
         this._useSearch = !!useSearch;
     }
     @Input() canReset = false;
+    @Input() canAdd = false;
     @Input() hasInfiniteScroll = false;
     @Input() title: string;
     @Input() searchPlaceholder: string;

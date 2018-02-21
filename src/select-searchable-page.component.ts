@@ -14,7 +14,7 @@ import { SelectSearchable } from './select-searchable.component';
                     #searchbarComponent
                     [(ngModel)]="selectComponent.filterText"
                     (ionInput)="filterItems()"
-                    [placeholder]="selectComponent.searchPlaceholder || 'Search'">
+                    [placeholder]="selectComponent.searchPlaceholder  || 'Pesquise por nome'">
                 </ion-searchbar>
             </ion-toolbar>
         </ion-header>
@@ -37,8 +37,9 @@ import { SelectSearchable } from './select-searchable.component';
                 <ion-infinite-scroll-content></ion-infinite-scroll-content>
             </ion-infinite-scroll>
 
-            <button ion-button block *ngIf="!filteredItems.length" type="button" (click)="addItem(selectComponent.filterText)">Adicionar {{selectComponent.filterText}}</button>
-       
+            <button ion-button block *ngIf="!filteredItems.length && selectComponent.filterText.length >0 && selectComponent.canAdd" type="button" (click)="addItem(selectComponent.filterText)" style="margin-top:8px;">Adicionar {{selectComponent.filterText}}</button>
+            <div padding *ngIf="!filteredItems.length && !selectComponent.canAdd"> Nenhum item encontrado</div>
+            
             </ion-content>
         <ion-footer *ngIf="selectComponent.canReset || selectComponent.multiple">
             <ion-toolbar padding>
@@ -152,6 +153,7 @@ export class SelectSearchablePage implements AfterViewInit {
         this.selectedItems = [];
         this.addSelectedItem(item);
         this.selectComponent.emitAdd(item);
+        this.close();
     }
 
     ok() {
